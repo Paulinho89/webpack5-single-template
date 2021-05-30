@@ -1,6 +1,5 @@
 const Path = require("path");
 const glob = require("glob");
-const HappyPack = require("happypack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const PurgecssPlugin = require("purgecss-webpack-plugin");
 const BasePlugins = require("./plugins");
@@ -12,6 +11,9 @@ const PATHS = {
 };
 
 module.exports = {
+    entry: {
+        app: resolve(__dirname, "../src/main")
+    },
     output: {
         filename: "js/[name]-[hash:6].js",
         chunkFilename: "js/[name]-[chunkhash:6].js",
@@ -124,13 +126,6 @@ module.exports = {
     },
     plugins: [
         ...BasePlugins,
-        new HappyPack({
-            // id 标识符，要和 rules 中指定的 id 对应起来
-            id: "babel",
-            // 需要使用的 loader，用法和 rules 中 Loader 配置一样
-            // 可以直接是字符串，也可以是对象形式
-            loaders: ["babel-loader?cacheDirectory=true"]
-        }),
         new MiniCssExtractPlugin({
             filename: "[name]_[contenthash:8].css"
         }),
@@ -139,6 +134,21 @@ module.exports = {
             paths: glob.sync(`${PATHS.src}/**/*`,  { nodir: true }),
         })
     ],
+    cache: {      
+        // 将缓存类型设置为文件系统      
+        type: "filesystem",       
+        buildDependencies: {        
+            /* 将你的 config 添加为 buildDependency，           
+               以便在改变 config 时获得缓存无效*/        
+            config: [__filename],        
+            /* 如果有其他的东西被构建依赖，           
+               你可以在这里添加它们*/        
+            /* 注意，webpack.config，           
+               加载器和所有从你的配置中引用的模块都会被自动添加*/      
+        },      
+        // 指定缓存的版本      
+        version: "1.0"     
+    },
     resolve: {
         extensions: [".js", ".json", ".css", ".less", ".vue"],
         alias: {
