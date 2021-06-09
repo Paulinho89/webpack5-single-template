@@ -1,5 +1,6 @@
 const Path = require("path");
 const glob = require("glob");
+const HappyPack = require("happypack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const PurgecssPlugin = require("purgecss-webpack-plugin");
 const BasePlugins = require("./plugins");
@@ -11,9 +12,6 @@ const PATHS = {
 };
 
 module.exports = {
-    entry: {
-        app: resolve(__dirname, "../src/main")
-    },
     output: {
         filename: "js/[name]-[hash:6].js",
         chunkFilename: "js/[name]-[chunkhash:6].js",
@@ -62,15 +60,7 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                use: [
-                    {
-                        loader: "thread-loader",
-                        options: {
-                            workers: 3
-                        }
-                    },
-                    "babel-loader",
-                ],
+                use: ["happypack/loader?id=babel"],
                 exclude: /node_modules/
             },
             {
@@ -126,6 +116,13 @@ module.exports = {
     },
     plugins: [
         ...BasePlugins,
+        new HappyPack({
+            // id 标识符，要和 rules 中指定的 id 对应起来
+            id: "babel",
+            // 需要使用的 loader，用法和 rules 中 Loader 配置一样
+            // 可以直接是字符串，也可以是对象形式
+            loaders: ["babel-loader?cacheDirectory=true"]
+        }),
         new MiniCssExtractPlugin({
             filename: "[name]_[contenthash:8].css"
         }),

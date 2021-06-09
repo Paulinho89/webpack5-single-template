@@ -1,14 +1,14 @@
+const Path = require("path");
 const WebpackConfig = require("./webpack.config.base.js");
 const { merge: WebpackMerge } = require("webpack-merge");
 const Webpack = require("webpack");
 
+const { resolve } = Path;
+
 module.exports = WebpackMerge(WebpackConfig, {
     mode: "development",
-    target: "web",
-    devServer: {
-        port: 3000,
-        hot: true,
-        contentBase: "../dist"
+    entry: {
+        app: ["webpack-hot-middleware/client", resolve(__dirname, "../src/main")]
     },
     plugins: [
         new Webpack.HotModuleReplacementPlugin()

@@ -30,13 +30,13 @@ const hotMiddleware = WebpackHotMiddleware(compiler, {
     log: () => {}
 });
 // 触发页面刷新
-compiler.plugin("compilation", compilation => {
-    compilation.plugin("html-webpack-plugin-after-emit", () => {
-        hotMiddleware.publish({ action: "reload" });
-    });
-});
+// compiler.plugin("compilation", compilation => {
+//     compilation.plugin("html-webpack-plugin-after-emit", () => {
+//         hotMiddleware.publish({ action: "reload" });
+//     });
+// });
 // 终端编译信息输出
-compiler.apply(new DashboardPlugin());
+// compiler.apply(new DashboardPlugin());
 // 代理
 Object.keys(proxyTable).forEach(context => {
     let options = proxyTable[context];
