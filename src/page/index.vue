@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     {{ msg }}
-    <!-- <img :src="require('@/images/bg.jpg')"> -->
+    <img :src="require('@/images/bg.jpg')">
   </div>
 </template>
 
@@ -11,7 +11,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
     data() {
         return {
-            msg: "从0到1手把手带你捋一套webpack+vue单页项目模板"
+            msg: "从0到1手把手带你捋一套webpack+vue单页项目模板222"
         };
     },
     computed: {
@@ -45,6 +45,11 @@ export default {
     align-items: center;
     color: red;
     font-size: 20px;
+
+    img {
+        width: 500px;
+        height: 500px;
+    }
 }
 
 .unused-css {

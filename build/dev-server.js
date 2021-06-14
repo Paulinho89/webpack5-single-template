@@ -43,7 +43,7 @@ Object.keys(proxyTable).forEach(context => {
     if (typeof options === "string") {
         options = { target: options };
     }
-    app.use(ProxyMiddleware(options.filter || context, options));
+    // app.use(ProxyMiddleware(options.filter || context, options));
 });
 // 设置允许跨域
 app.all("*", (req, res, next) => {

@@ -13,7 +13,7 @@ const PATHS = {
 
 module.exports = {
     output: {
-        filename: "js/[name]-[hash:6].js",
+        filename: "js/[name]-[chunkhash:6].js",
         chunkFilename: "js/[name]-[chunkhash:6].js",
         path: resolve(__dirname, "../dist")
     },
@@ -69,9 +69,10 @@ module.exports = {
                     {
                         loader: "url-loader",
                         options: {
+                            esModule: false,
                             limit: 8192,
                             outputPath: "img/",
-                            name: "[name]-[hash:6].[ext]"
+                            name: "[name]-[chunkhash:6].[ext]"
                         }
                     },
                     {
@@ -127,9 +128,9 @@ module.exports = {
             filename: "[name]_[contenthash:8].css"
         }),
         // 开启css的tree-shaking
-        new PurgecssPlugin({
-            paths: glob.sync(`${PATHS.src}/**/*`,  { nodir: true }),
-        })
+        // new PurgecssPlugin({
+        //     paths: glob.sync(`${PATHS.src}/**/*`,  { nodir: true }),
+        // })
     ],
     cache: {      
         // 将缓存类型设置为文件系统      
