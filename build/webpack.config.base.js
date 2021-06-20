@@ -2,7 +2,6 @@ const Path = require("path");
 const glob = require("glob");
 const HappyPack = require("happypack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const PurgecssPlugin = require("purgecss-webpack-plugin");
 const BasePlugins = require("./plugins");
 
 const { resolve } = Path;
@@ -75,30 +74,30 @@ module.exports = {
                             name: "[name]-[chunkhash:6].[ext]"
                         }
                     },
-                    {
-                        loader: "image-webpack-loader",
-                        options: {
-                          mozjpeg: {
-                            progressive: true,
-                            quality: 65
-                          },
-                          // optipng.enabled: false will disable optipng
-                          optipng: {
-                            enabled: false,
-                          },
-                          pngquant: {
-                            quality: "65-90",
-                            speed: 4
-                          },
-                          gifsicle: {
-                            interlaced: false,
-                          },
-                          // the webp option will enable WEBP
-                          webp: {
-                            quality: 75
-                          }
-                        }
-                    }
+                    // {
+                    //     loader: "image-webpack-loader",
+                    //     options: {
+                    //       mozjpeg: {
+                    //         progressive: true,
+                    //         quality: 65
+                    //       },
+                    //       // optipng.enabled: false will disable optipng
+                    //       optipng: {
+                    //         enabled: false,
+                    //       },
+                    //       pngquant: {
+                    //         quality: "65-90",
+                    //         speed: 4
+                    //       },
+                    //       gifsicle: {
+                    //         interlaced: false,
+                    //       },
+                    //       // the webp option will enable WEBP
+                    //       webp: {
+                    //         quality: 75
+                    //       }
+                    //     }
+                    // }
                 ]
             },
             {
@@ -126,11 +125,7 @@ module.exports = {
         }),
         new MiniCssExtractPlugin({
             filename: "[name]_[contenthash:8].css"
-        }),
-        // 开启css的tree-shaking
-        // new PurgecssPlugin({
-        //     paths: glob.sync(`${PATHS.src}/**/*`,  { nodir: true }),
-        // })
+        })
     ],
     cache: {      
         // 将缓存类型设置为文件系统      
